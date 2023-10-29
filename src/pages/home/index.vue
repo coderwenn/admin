@@ -1,15 +1,14 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import HomeAside from '../../components/home-aside/index.vue'
+// import HomeHeader from '../../components/home-header/index.vue'
 import {
-  Document,
-  Menu as IconMenu,
-  Location,
-  Setting,
   CirclePlusFilled,
   Plus,
 } from '@element-plus/icons-vue'
+import { useRouter } from "vue-router";
 
-const isCollapse = ref(false)
+const router = useRouter()
+
 
 const tableData = [
   {
@@ -33,11 +32,15 @@ const tableData = [
     address: 'No. 189, Grove St, Los Angeles',
   },
 ]
-const handleOpen = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath)
-}
-const handleClose = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath)
+
+const userFeature = (val: string) => {
+  if (val === '退出登陆') {
+    //  跳转到登陆页面
+    router.push('/login')
+
+  } else {
+    console.log(val)
+  }
 }
 
 </script>
@@ -46,74 +49,23 @@ const handleClose = (key: string, keyPath: string[]) => {
   <div class="home-box">
     <div class="common-layout">
       <el-container class="home-box-center">
-        <el-aside :width="isCollapse ?'64px' : '200px'" class="center-aside">
-          <el-radio-group v-model="isCollapse" style="margin-bottom: 20px">
-            <el-radio-button :label="false">expand</el-radio-button>
-            <el-radio-button :label="true">collapse</el-radio-button>
-          </el-radio-group>
-          <el-menu
-              style="border-right: none"
-              default-active="2"
-              class="el-menu-vertical-demo"
-              :collapse="isCollapse"
-              background-color="#282c36"
-              active-text-color="#f8f8f8"
-              text-color="#73767b"
-              @open="handleOpen"
-              @close="handleClose"
-          >
-            <el-sub-menu index="1">
-              <template #title>
-                <el-icon>
-                  <location/>
-                </el-icon>
-                <span>Navigator One</span>
-              </template>
-              <el-menu-item-group>
-                <template #title><span>Group One</span></template>
-                <el-menu-item index="1-1">item one</el-menu-item>
-                <el-menu-item index="1-2">item two</el-menu-item>
-              </el-menu-item-group>
-              <el-menu-item-group title="Group Two">
-                <el-menu-item index="1-3">item three</el-menu-item>
-              </el-menu-item-group>
-              <el-sub-menu index="1-4">
-                <template #title><span>item four</span></template>
-                <el-menu-item index="1-4-1">item one</el-menu-item>
-              </el-sub-menu>
-            </el-sub-menu>
-            <el-menu-item index="2">
-              <el-icon>
-                <icon-menu/>
-              </el-icon>
-              <template #title>Navigator Two</template>
-            </el-menu-item>
-            <el-menu-item index="3" disabled>
-              <el-icon>
-                <document/>
-              </el-icon>
-              <template #title>Navigator Three</template>
-            </el-menu-item>
-            <el-menu-item index="4">
-              <el-icon>
-                <setting/>
-              </el-icon>
-              <template #title>Navigator Four</template>
-            </el-menu-item>
-          </el-menu>
-        </el-aside>
+        <!--        导航栏-->
+        <HomeAside></HomeAside>
         <el-container>
           <el-header class="header-box">
+            <!--            预留位置-->
             <div></div>
+            <!--            用户操作-->
             <div>
               <el-dropdown trigger="click">
               <span class="el-dropdown-link">
                 <el-avatar> user</el-avatar>
               </span>
                 <template #dropdown>
-                  <el-dropdown-menu>
-                    <el-dropdown-item :icon="Plus">退出登陆</el-dropdown-item>
-                    <el-dropdown-item :icon="CirclePlusFilled">
+                  <el-dropdown-menu :split-button="true">
+                    <el-dropdown-item :icon="Plus" @click="userFeature('退出登陆')">退出登陆</el-dropdown-item>
+                    <el-dropdown-item :icon="CirclePlusFilled" @click="userFeature('修改密码')
+                    ">
                       修改密码
                     </el-dropdown-item>
                   </el-dropdown-menu>
@@ -138,10 +90,7 @@ const handleClose = (key: string, keyPath: string[]) => {
 .home-box {
   width: 100vw;
   height: 100vh;
-  .center-aside{
-    transition: width 0.3s ease;
-    background-color: #282c36;
-  }
+
 
   .home-box-center {
     height: 100%
