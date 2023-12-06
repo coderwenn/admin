@@ -35,9 +35,8 @@ const tableData = [
 
 const userFeature = (val: string) => {
   if (val === '退出登陆') {
-    //  跳转到登陆页面
-    router.push('/login')
-
+    // 关闭页面进入到新的页面
+    router.replace({path: '/login'})
   } else {
     console.log(val)
   }
