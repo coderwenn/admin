@@ -51,26 +51,16 @@ const loginSubmit = (LoginFormRef: {
               <el-input v-model="loginForm.userName" />
             </el-form-item>
             <el-form-item label="密码" prop="password">
-              <el-input
-                v-model="loginForm.password"
-                text="password"
-                show-password
-              />
+              <el-input v-model="loginForm.password" text="password" show-password />
             </el-form-item>
             <el-form-item label="验证码" prop="code">
-              <el-input
-                v-model="loginForm.code"
-                text="password"
-                show-password
-              />
+              <el-input v-model="loginForm.code" text="password" show-password />
             </el-form-item>
             <div class="code-img">
               <img src="/api/user/code" alt="" />
             </div>
             <el-form-item>
-              <el-button type="success" @click="loginSubmit(LoginFormRef)"
-                >登录</el-button
-              >
+              <el-button type="success" @click="loginSubmit(LoginFormRef)">登录</el-button>
             </el-form-item>
           </el-form>
         </div>
