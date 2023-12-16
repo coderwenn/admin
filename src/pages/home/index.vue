@@ -9,30 +9,6 @@ import { useRouter } from "vue-router";
 
 const router = useRouter()
 
-
-const tableData = [
-  {
-    date: '2016-05-03',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-02',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-04',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-01',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-]
-
 const userFeature = (val: string) => {
   if (val === '退出登陆') {
     // 关闭页面进入到新的页面
@@ -52,9 +28,7 @@ const userFeature = (val: string) => {
         <HomeAside></HomeAside>
         <el-container>
           <el-header class="header-box">
-            <!--            预留位置-->
             <div></div>
-            <!--            用户操作-->
             <div>
               <el-dropdown trigger="click">
               <span class="el-dropdown-link">
@@ -73,11 +47,7 @@ const userFeature = (val: string) => {
             </div>
           </el-header>
           <el-main>
-            <el-table :data="tableData" style="width: 100%">
-              <el-table-column prop="date" label="Date" width="180"/>
-              <el-table-column prop="name" label="Name" width="180"/>
-              <el-table-column prop="address" label="Address"/>
-            </el-table>
+            <router-view />
           </el-main>
         </el-container>
       </el-container>

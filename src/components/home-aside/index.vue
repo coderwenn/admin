@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { Document, Location, Setting } from "@element-plus/icons-vue";
-import { ref } from "vue";
+import {Document, Location, Setting,User} from "@element-plus/icons-vue";
+import {ref} from "vue";
 
 const isCollapse = ref(false)
 
@@ -10,6 +10,11 @@ const handleOpen = (key: string, keyPath: string[]) => {
 }
 const handleClose = (key: string, keyPath: string[]) => {
   console.log(key, keyPath)
+}
+
+// 路径跳转
+const toNav = (val: string) => {
+  console.log(val)
 }
 
 </script>
@@ -30,6 +35,7 @@ const handleClose = (key: string, keyPath: string[]) => {
         text-color="#73767b"
         @open="handleOpen"
         @close="handleClose"
+        :router="true"
     >
       <el-sub-menu index="1">
         <template #title>
@@ -51,10 +57,8 @@ const handleClose = (key: string, keyPath: string[]) => {
           <el-menu-item index="1-4-1">item one</el-menu-item>
         </el-sub-menu>
       </el-sub-menu>
-      <el-menu-item index="2">
-        <el-icon>
-          <icon-menu/>
-        </el-icon>
+      <el-menu-item index="/user" >
+          <el-icon><User/></el-icon>
         <template #title>Navigator Two</template>
       </el-menu-item>
       <el-menu-item index="3" disabled>
