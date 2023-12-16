@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@types/node": "^20.10.4",
     "axios": "^1.6.2",
     "element-plus": "^2.4.1",
     "jwt-decode": "^4.0.0",

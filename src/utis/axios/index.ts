@@ -14,20 +14,21 @@ wenHttp.interceptors.request.use(
         return config
     },
     (err: any) => {
-        console.log(err)
+        console.warn(err)
         ElMessage.error(err)
     }
 )
 
-// 相应拦截
+// 响应拦截
 wenHttp.interceptors.response.use(
     (res: AxiosResponse): AxiosResponse => {
         return res.data
     },
     (err: any) => {
+        console.warn(err)
         // 添加错误信息提示 以及操作
+        ElMessage.error(err)
     }
 )
-
 
 export default wenHttp
