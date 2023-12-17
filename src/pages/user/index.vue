@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { ref, Ref } from "vue";
-import { getAllUser } from "@/api/index";
+import { getAllUser, delectUser } from "@/api/index";
 import { UserControls, UserData } from "@/types";
-import { formattedDate } from "@/utis/index";
+import { formattedDate } from "@/utils/index";
+import { ElMessage } from 'element-plus'
+
 
 const useData = ref<UserData[]>();
 
@@ -22,6 +24,12 @@ getInfo();
 // 修改状态
 const changStatus = (row: UserData) => {
   console.log(row);
+};
+// 删除用户需要二级确认
+const isDelete = (row: UserData) => {
+  delectUser(row.id).then(_res=>{
+    ElMessage.success('删除成功')
+  })
 };
 </script>
 
@@ -51,6 +59,19 @@ const changStatus = (row: UserData) => {
               --el-switch-off-color: #ff4949;
             "
           />
+        </template>
+      </el-table-column>
+      <el-table-column fixed="right" label="操作" width="120">
+        <template #default="scope">
+          <el-popconfirm
+            title="确认删除用户嘛?"
+            :hide-icon="true"
+            @confirm="isDelete(scope.row)"
+          >
+            <template #reference>
+              <el-button type="danger" size="small">删除</el-button>
+            </template>
+          </el-popconfirm>
         </template>
       </el-table-column>
     </el-table>
