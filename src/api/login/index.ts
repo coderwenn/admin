@@ -1,4 +1,4 @@
-import wenHttp from '../../utis/axios'
+import wenHttp from '@/utils/axios'
 import { UserInfo } from '../../types/login'
 
 
