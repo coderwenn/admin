@@ -1,21 +1,24 @@
 <script setup lang="ts">
 import { ref, Ref } from "vue"
-import { getAllUser, delectUser,setStatus } from "@/api/index"
+import { getAllUser, delectUser, setStatus } from "@/api/index"
 import { UserControls, UserData } from "@/types"
 import { formattedDate } from "@/utils/index"
 import { ElMessage } from "element-plus"
+import addUserDialog from './comp/dialog.vue'
+
 const useData: Ref<UserData[]> = ref([])
 
 const userInfo: Ref<UserControls> = ref({
   userName: "",
 });
 
+const isAdmin = true
+
+const dialogRef = ref()
+
 const getInfo = async () => {
   const res = await getAllUser<UserData[]>();
   useData.value = res.data;
-  useData.value.forEach((it) => {
-    console.log(formattedDate(it.createTime))
-  })
 }
 getInfo()
 
@@ -35,13 +38,21 @@ const isDelete = (row: UserData) => {
     ElMessage.success("删除成功")
   })
 }
+
+// 添加用户
+const addUser = ()=>{
+  dialogRef.value.setTitle('新增用户')
+}
 </script>
 
 <template>
   <div class="user-box">
     <div class="controls">
-      <div>
+      <div class="left">
         <el-input v-model="userInfo.userName" placeholder="用户名" />
+      </div>
+      <div class="right">
+        <el-button type="primary" v-if="isAdmin" @click="addUser">添加用户</el-button>
       </div>
     </div>
     <el-table :data="useData" style="width: 100%">
@@ -72,6 +83,7 @@ const isDelete = (row: UserData) => {
         </template>
       </el-table-column>
     </el-table>
+    <addUserDialog ref="dialogRef"></addUserDialog>
   </div>
 </template>
 
@@ -85,6 +97,7 @@ const isDelete = (row: UserData) => {
     height: 50px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
   }
 }
 </style>
