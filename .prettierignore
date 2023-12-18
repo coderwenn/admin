@@ -1,0 +1,10 @@
+dist
+env
+node_modules
+public
+scripts
+typings
+README.md
+package-lock.json
+.azure-pipelines.yml
+tsconfig.json
