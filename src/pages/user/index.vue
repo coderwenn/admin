@@ -1,12 +1,10 @@
 <script setup lang="ts">
-import { ref, Ref } from "vue";
-import { getAllUser, delectUser } from "@/api/index";
-import { UserControls, UserData } from "@/types";
-import { formattedDate } from "@/utils/index";
-import { ElMessage } from 'element-plus'
-
-
-const useData = ref<UserData[]>();
+import { ref, Ref } from "vue"
+import { getAllUser, delectUser,setStatus } from "@/api/index"
+import { UserControls, UserData } from "@/types"
+import { formattedDate } from "@/utils/index"
+import { ElMessage } from "element-plus"
+const useData: Ref<UserData[]> = ref([])
 
 const userInfo: Ref<UserControls> = ref({
   userName: "",
@@ -16,21 +14,27 @@ const getInfo = async () => {
   const res = await getAllUser<UserData[]>();
   useData.value = res.data;
   useData.value.forEach((it) => {
-    console.log(formattedDate(it.createTime));
-  });
-};
-getInfo();
+    console.log(formattedDate(it.createTime))
+  })
+}
+getInfo()
 
 // 修改状态
 const changStatus = (row: UserData) => {
-  console.log(row);
-};
+  setStatus({
+    id: row.id,
+    status: row.status
+  }).then((_res) => {
+    ElMessage.success("修改成功")
+  })
+}
+
 // 删除用户需要二级确认
 const isDelete = (row: UserData) => {
-  delectUser(row.id).then(_res=>{
-    ElMessage.success('删除成功')
+  delectUser(row.id).then((_res) => {
+    ElMessage.success("删除成功")
   })
-};
+}
 </script>
 
 <template>
@@ -48,28 +52,21 @@ const isDelete = (row: UserData) => {
           {{ formattedDate(scope.row.createTime) }}
         </template>
       </el-table-column>
-      <el-table-column prop="status" label="状态">
+      <el-table-column prop="status" label="状态" width="200">
         <template #default="scope">
-          <el-switch
-            v-model="scope.row.status"
-            @change="changStatus(scope.row)"
-            class="ml-2"
-            style="
+          <el-switch v-model="scope.row.status" @change="changStatus(scope.row)" class="ml-2" style="
               --el-switch-on-color: #13ce66;
               --el-switch-off-color: #ff4949;
-            "
-          />
+            " />
         </template>
       </el-table-column>
-      <el-table-column fixed="right" label="操作" width="120">
+      <el-table-column prop="isAdmin" label="是否管理员" width="200" />
+      <el-table-column fixed="right" label="操作" width="180">
         <template #default="scope">
-          <el-popconfirm
-            title="确认删除用户嘛?"
-            :hide-icon="true"
-            @confirm="isDelete(scope.row)"
-          >
+          <el-popconfirm title="确认删除用户嘛?" :hide-icon="true" @confirm="isDelete(scope.row)">
             <template #reference>
               <el-button type="danger" size="small">删除</el-button>
+              <el-button type="danger" size="small" v-if="scope.row.isAdmin">编辑</el-button>
             </template>
           </el-popconfirm>
         </template>

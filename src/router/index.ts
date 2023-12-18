@@ -26,4 +26,23 @@ const router = createRouter({
     ]
 })
 
+const token = localStorage.getItem('code_token')
+const limitsRouter = ['/login']
+
+// token信息验证
+router.beforeEach((to, from, next) => {
+    next()
+    // 无token走向管理页面
+    // if(!limitsRouter.includes(to.path) && !token) {
+    //     next('/login')
+    // }
+    // 无token走向登陆页面
+    // if(limitsRouter.includes(to.path) && !token) {
+    //     next()
+    // }
+    // 有token 登陆其他权限页面(待定)
+    
+})
+
+
 export default router
